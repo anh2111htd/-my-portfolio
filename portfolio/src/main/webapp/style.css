@@ -1,11 +1,11 @@
+@import url('https://fonts.googleapis.com/css?family=Lobster|EB+Garamond');
+h1, h2, h3, h4, h5, h6 {font-family: Lobster, cursive; }
+p {font-family: 'EB Garamond', serif; }
+
 #content {
   margin-left: auto;
   margin-right: auto;
   width: 650px;
-}
-
-#greeting-container {
-  margin-top: 20px;
 }
 
 .parent {
