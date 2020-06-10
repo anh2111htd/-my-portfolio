@@ -31,8 +31,10 @@ function addRandomGreeting() {
  * Adds a greeting from /data to the page.
  */
 function getGreeting() {
-  fetch('/data').then(response => response.text()).then((greeting) => {
-    document.getElementById('greeting-container').innerText = greeting;
+  fetch('/data').then(response => response.json()).then((messages) => {
+    const hour = new Date().getHours();
+    const message = messages[(hour < 12) ? 0 : (hour < 17) ? 1 : 2];
+    document.getElementById('greeting-container').innerText = message;
   });
 }
 
