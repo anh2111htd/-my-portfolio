@@ -16,8 +16,12 @@
  * Adds a random greeting to the page.
  */
 function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+  const greetings = [
+    'Hello world!',
+    '¡Hola Mundo!',
+    '你好，世界！',
+    'Bonjour le monde!'
+  ];
 
   // Pick a random greeting.
   const greeting = greetings[Math.floor(Math.random() * greetings.length)];
@@ -28,14 +32,14 @@ function addRandomGreeting() {
 }
 
 /**
- * Adds a greeting from /data to the page.
+ * Adds comments from /data to the page.
  */
-function getGreeting() {
-  fetch('/data').then(response => response.json()).then((messages) => {
-    const hour = new Date().getHours();
-    const message = messages[(hour < 12) ? 0 : (hour < 17) ? 1 : 2];
-    document.getElementById('greeting-container').innerText = message;
-  });
+function getComments() {
+  fetch('/data')
+    .then(response => response.json())
+    .then(comments => {
+      document.getElementById('notes-container').innerHTML = `${comments.map(comment => `<p>${comment}</p>`).join("")}`;
+    });
 }
 
-getGreeting();
+getComments();

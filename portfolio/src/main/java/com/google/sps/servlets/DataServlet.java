@@ -20,19 +20,28 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList; 
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-	private String[] messages = new String[]{
-		"Good morning, have a beautiful day!",
-		"Hello, good afternoon!",
-		"Have a lovely evening!"
-	};
+  private ArrayList<String> comments = new ArrayList<String>();
+  private Gson gson = new Gson();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("application/json;");
-    response.getWriter().println(new Gson().toJson(messages));
+    response.getWriter().println(gson.toJson(comments));
+  }
+
+	@Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // Get the input from the form.
+    String newComment = request.getParameter("text-input");
+    comments.add(newComment);
+
+    // Respond with the result.
+    response.setContentType("application/json;");
+    response.getWriter().println(gson.toJson(comments));
   }
 }
