@@ -22,17 +22,17 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import java.io.IOException;
 import com.google.gson.Gson;
+import com.google.sps.data.Comment;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList; 
+import java.util.ArrayList;
 import java.util.List;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+/** Servlet that returns some example content */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-  private ArrayList<String> comments = new ArrayList<String>();
   private Gson gson = new Gson();
   DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
@@ -40,7 +40,7 @@ public class DataServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // response.setContentType("application/json;");
     // response.getWriter().println(gson.toJson(comments));
-    
+
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
 
@@ -50,15 +50,15 @@ public class DataServlet extends HttpServlet {
       String comment = (String) entity.getProperty("comment");
       long timestamp = (long) entity.getProperty("timestamp");
 
-      Comment comment = new Comment(id, title, timestamp);
-      comments.add(comment);
+      Comment newComment = new Comment(id, comment, timestamp);
+      comments.add(newComment);
     }
 
     response.setContentType("application/json;");
     response.getWriter().println(gson.toJson(comments));
   }
 
-	@Override
+  @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get the input from the form.
     String comment = request.getParameter("text-input");
