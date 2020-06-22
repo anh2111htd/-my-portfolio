@@ -38,10 +38,36 @@ function getComments() {
   fetch("/data")
     .then((response) => response.json())
     .then((comments) => {
+      console.log(comment);
       document.getElementById("notes-container").innerHTML = `${comments
         .map((comment) => `<p>${comment.comment}</p>`)
         .join("")}`;
     });
 }
 
+// function fetchBlobstoreUrlAndShowForm() {
+//   fetch("/blobstore-upload-url")
+//     .then((response) => {
+//       return response.text();
+//     })
+//     .then((imageUploadUrl) => {
+//       const messageForm = document.getElementById("image-uploads-form");
+//       messageForm.action = imageUploadUrl;
+//       messageForm.classList.remove("hidden");
+//     });
+// }
+
+// Fetches Blobstore URL for form action to faciliate upload of images
+function getBlobstoreURL() {
+  fetch("/blobstore-upload-url")
+    .then((response) => {
+      return response.text();
+    })
+    .then((imageUploadUrl) => {
+      const commentForm = document.getElementById("comment-form");
+      commentForm.action = imageUploadUrl;
+    });
+}
+
+getBlobstoreURL();
 getComments();
