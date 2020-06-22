@@ -15,7 +15,7 @@ public final class Comment {
   }
 
   public Comment(long id, String comment, long timestamp, String imageURL) {
-    Comment(id, comment, timestamp);
+    this(id, comment, timestamp);
     this.imageURL = imageURL;
   }
 }
