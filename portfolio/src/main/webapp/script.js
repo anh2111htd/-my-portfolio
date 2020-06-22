@@ -38,7 +38,7 @@ function getComments() {
   fetch("/data")
     .then((response) => response.json())
     .then((comments) => {
-      console.log(comment);
+      console.log(comments);
       document.getElementById("notes-container").innerHTML = `${comments
         .map((comment) => `<p>${comment.comment}</p>`)
         .join("")}`;
