@@ -4,14 +4,15 @@ package com.google.sps.data;
 public final class Comment {
 
   private final long id;
-  private final String comment;
+  private String comment;
   private final long timestamp;
-  private final String imageURL;
+  private String imageURL;
 
   public Comment(long id, String comment, long timestamp) {
     this.id = id;
     this.comment = comment;
     this.timestamp = timestamp;
+    this.imageURL = "";
   }
 
   public Comment(long id, String comment, long timestamp, String imageURL) {
