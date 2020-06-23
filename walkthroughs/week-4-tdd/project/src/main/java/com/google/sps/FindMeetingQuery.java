@@ -14,10 +14,28 @@
 
 package com.google.sps;
 
-import java.util.Collection;
+import java.util.*;
+
+import jdk.jfr.Event;
 
 public final class FindMeetingQuery {
-  public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    throw new UnsupportedOperationException("TODO: Implement this method.");
+  public Collection<TimeRange> query(Collection<Event> eventCollection, MeetingRequest request) {
+    // throw new UnsupportedOperationException("TODO: Implement this method.");
+    // Sort by start date 
+    List<Event> events = new ArrayList(eventCollection);
+    events.sort((Event e1, Event e2) -> e1.getWhen().start() - e2.getWhen().start());
+
+    Collection<TimeRange> result = new ArrayList<TimeRange>();
+    int prevStart = TimeRange.START_OF_DAY;
+    for (int i = 0; i < events.size(); i++) {
+      if (!Collections.disjoint(request.getAttendees(), events.at(i).getAttendees())) {
+        int currStart = events.at(i).getWhen().start();
+        if (prevStart < currStart) {
+          result.add(new TimeRange(currentStart,  - currentStart));
+        }
+        prevStart = max(prevStart, events.at(i).getWhen().end());
+      }
+    }
+    return result;
   }
 }
