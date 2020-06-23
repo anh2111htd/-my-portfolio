@@ -32,8 +32,19 @@ function addRandomGreeting() {
 }
 
 /**
- * Adds a greeting from /data to the page.
+ * Adds comments from /data to the page.
  */
+function getComments() {
+  fetch("/data")
+    .then((response) => response.json())
+    .then((comments) => {
+      document.getElementById("notes-container").innerHTML = `${comments
+        .map((comment) => `<p>${comment}</p>`)
+        .join("")}`;
+    });
+}
+
+getComments();
 function getGreeting() {
   fetch("/data")
     .then((response) => response.text())
