@@ -30,7 +30,7 @@ public final class FindMeetingQuery {
         if (prevStart < currStart) {
           duration = currStart - prevStart;
           if (duration >= request.getDuration()) {
-            result.add(new TimeRange(prevStart, duration));
+            result.add(fromStartDuration(prevStart, duration));
           }
         }
         prevStart = Math.max(prevStart, events.get(i).getWhen().end());
@@ -40,7 +40,7 @@ public final class FindMeetingQuery {
     // Add the timeslot lasting until the end of the day
     duration = TimeRange.END_OF_DAY + 1 - prevStart;
     if (duration >= request.getDuration()) {
-      result.add(new TimeRange(prevStart, duration));
+      result.add(fromStartDuration(prevStart, duration));
     }
     return result;
   }
