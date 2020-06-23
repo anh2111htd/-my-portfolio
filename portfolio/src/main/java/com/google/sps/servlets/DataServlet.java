@@ -33,14 +33,14 @@ import java.util.List;
 /** Servlet that returns some example content */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
+
+   private static final String JSON_CONTENT_TYPE = "application/json";
+
   private Gson gson = new Gson();
   DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // response.setContentType("application/json;");
-    // response.getWriter().println(gson.toJson(comments));
-
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
 
@@ -54,7 +54,7 @@ public class DataServlet extends HttpServlet {
       comments.add(newComment);
     }
 
-    response.setContentType("application/json;");
+    response.setContentType(JSON_CONTENT_TYPE);
     response.getWriter().println(gson.toJson(comments));
   }
 
