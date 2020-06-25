@@ -22,8 +22,8 @@ function getComments() {
       console.log(comments);
       document.getElementById("notes-container").innerHTML = `${comments
         .map(
-          (comment) => `<p>${comment.comment}</p>
-            ${
+          (comment) =>
+            `<p>${comment.comment}</p>${
               comment.imgURL &&
               `<img src="${comment.imgURL}" alt="Image for ${comment.comment}">`
             }`
