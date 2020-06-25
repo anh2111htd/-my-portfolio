@@ -13,25 +13,6 @@
 // limitations under the License.
 
 /**
- * Adds a random greeting to the page.
- */
-function addRandomGreeting() {
-  const greetings = [
-    "Hello world!",
-    "¡Hola Mundo!",
-    "你好，世界！",
-    "Bonjour le monde!",
-  ];
-
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
-
-  // Add it to the page.
-  const greetingContainer = document.getElementById("greeting-container");
-  greetingContainer.innerText = greeting;
-}
-
-/**
  * Adds comments from /data to the page.
  */
 function getComments() {
@@ -40,22 +21,19 @@ function getComments() {
     .then((comments) => {
       console.log(comments);
       document.getElementById("notes-container").innerHTML = `${comments
-        .map((comment) => `<p>${comment.comment}</p>`)
+        .map(
+          (comment) =>
+            ```
+            <p>${comment.comment}</p>
+            ${
+              comment.imgURL &&
+              `<img src="${comment.imgURL}" alt="Image for ${comment.comment}">`
+            }
+          ```
+        )
         .join("")}`;
     });
 }
-
-// function fetchBlobstoreUrlAndShowForm() {
-//   fetch("/blobstore-upload-url")
-//     .then((response) => {
-//       return response.text();
-//     })
-//     .then((imageUploadUrl) => {
-//       const messageForm = document.getElementById("image-uploads-form");
-//       messageForm.action = imageUploadUrl;
-//       messageForm.classList.remove("hidden");
-//     });
-// }
 
 // Fetches Blobstore URL for form action to faciliate upload of images
 function getBlobstoreURL() {

@@ -4,6 +4,8 @@
   width: 650px;
 }
 
-#greeting-container {
-  margin-top: 20px;
+#img {
+  border-radius: 5px;
+  max-width: 400px;
+  max-height: 700px;
 }

@@ -30,7 +30,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.io.PrintWriter;
 import com.google.appengine.api.blobstore.BlobInfo;
 import com.google.appengine.api.blobstore.BlobInfoFactory;
 import com.google.appengine.api.blobstore.BlobKey;
@@ -43,13 +42,14 @@ import com.google.appengine.api.images.ServingUrlOptions;
 /** Servlet that returns some example content */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
+
+  private static final String JSON_CONTENT_TYPE = "application/json";
+
   private Gson gson = new Gson();
   DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // response.setContentType("application/json;");
-    // response.getWriter().println(gson.toJson(comments));
 
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
@@ -65,7 +65,7 @@ public class DataServlet extends HttpServlet {
       comments.add(newComment);
     }
 
-    response.setContentType("application/json;");
+    response.setContentType(JSON_CONTENT_TYPE);
     response.getWriter().println(gson.toJson(comments));
   }
 
@@ -113,17 +113,13 @@ public class DataServlet extends HttpServlet {
 
     // GCS's localhost preview is not actually on localhost, so make the URL relative to the current domain.
     if (url.startsWith("http://localhost:8080/")) {
-      String relativeURL = formatURL(url);
-      return relativeURL;
+      return formatURL(url);
     }
 
     return url;
   }
 
   private String formatURL(String url) {
-
-      url = url.replace("http://localhost:8080/", "/");
-
-      return url; 
+    return url.replace("http://localhost:8080/", "/");
   }
 }
