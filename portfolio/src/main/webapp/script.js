@@ -24,8 +24,10 @@ function getComments() {
         .map(
           (comment) =>
             `<p>${comment.comment}</p>${
-              comment.imgURL &&
-              `<img src="${comment.imgURL}" alt="Image for ${comment.comment}">`
+              comment.imageURL
+                ? `<img src="${comment.imageURL}" alt="Image for 
+${comment.comment}">`
+                : ""
             }`
         )
         .join("")}`;
