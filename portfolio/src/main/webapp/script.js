@@ -39,7 +39,7 @@ function getComments() {
     .then((response) => response.json())
     .then((comments) => {
       document.getElementById("notes-container").innerHTML = `${comments
-        .map((comment) => `<p>${comment}</p>`)
+        .map((comment) => `<p>${comment.comment}</p>`)
         .join("")}`;
     });
 }
