@@ -1,11 +1,118 @@
+@import url("https://fonts.googleapis.com/css?family=Lobster|EB+Garamond");
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: Lobster, cursive;
+}
+p {
+  font-family: "EB Garamond", serif;
+  line-height: 1.5em;
+  font-size: 1.5em;
+}
+
 #content {
   margin-left: auto;
   margin-right: auto;
-  width: 650px;
+  max-width: 1000px;
+  display: grid;
+  grid-template-columns: repeat(6, 138px);
+  grid-template-rows: repeat(4, 138px);
+  grid-column-gap: 35px;
+  grid-row-gap: 35px;
+}
+
+.div1 {
+  grid-area: 2 / 4 / 3 / 5;
+}
+.div2 {
+  grid-area: 2 / 5 / 3 / 6;
+}
+.div3 {
+  grid-area: 2 / 6 / 3 / 7;
+}
+.div4 {
+  grid-area: 3 / 4 / 4 / 5;
+}
+.div5 {
+  grid-area: 3 / 5 / 4 / 6;
+}
+.div6 {
+  grid-area: 3 / 6 / 4 / 7;
+}
+.div7 {
+  grid-area: 4 / 4 / 5 / 5;
+}
+.div8 {
+  grid-area: 4 / 5 / 5 / 6;
+}
+.div9 {
+  grid-area: 4 / 6 / 5 / 7;
+}
+.div10 {
+  grid-area: 2 / 1 / 4 / 4;
+  padding-right: 70px;
+}
+.div11 {
+  grid-area: 4 / 1 / 5 / 2;
+}
+.div12 {
+  grid-area: 4 / 2 / 5 / 3;
+}
+.div13 {
+  grid-area: 1 / 1 / 2 / 2;
+}
+.div14 {
+  grid-area: 1 / 1 / 2 / 2;
+}
+.div15 {
+  grid-area: 1 / 1 / 2 / 2;
+}
+
+#homepage-logo {
+  width: 85px;
+  height: 84px;
+}
+
+.project-image {
+  border-radius: 5px;
+  width: 138px;
+  height: 138px;
+}
+
+.overlay {
+  transition: 0.5s ease;
+  opacity: 0;
+  border-radius: 5px;
+  width: 138px;
+  height: 138px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 5;
+  background-color: #ff8745;
+}
+
+.project-container {
+  position: relative;
+}
+
+.project-container:hover .overlay {
+  opacity: 0.8;
 }
 
 img {
   border-radius: 10px;
   max-width: 400px;
   max-height: 700px;
+}
+
+.project-description {
+  color: white;
+  font-size: 13px;
+  text-align: left;
+  margin: 5px;
+  font-family: "Arial", Helvetica, sans-serif;
 }
