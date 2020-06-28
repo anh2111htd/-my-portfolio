@@ -88,6 +88,20 @@ public class DataServlet extends HttpServlet {
 
   /** Returns a URL that points to the uploaded file, or null if the user didn't upload a file. */
   @Nullable private String getUploadedFileUrl(HttpServletRequest request, String formInputElementName) {
+    BlobKey blobKey = getBlobKey(request, formInputElementName);
+    if (blobKey == null) {
+      return null;
+    }
+
+    // Use ImagesService to get a URL that points to the uploaded file.
+    ImagesService imagesService = ImagesServiceFactory.getImagesService();
+    ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(blobKey);
+    String url = imagesService.getServingUrl(options);
+
+    return formatURL(url);
+  }
+
+  @Nullable BlobKey getBlobKey(HttpServletRequest request, String formInputElementName) {
     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
     Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
     List<BlobKey> blobKeys = blobs.get("image");
@@ -107,20 +121,15 @@ public class DataServlet extends HttpServlet {
       return null;
     }
 
-    // Use ImagesService to get a URL that points to the uploaded file.
-    ImagesService imagesService = ImagesServiceFactory.getImagesService();
-    ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(blobKey);
-    String url = imagesService.getServingUrl(options);
-
-    // GCS's localhost preview is not actually on localhost, so make the URL relative to the current domain.
-    if (url.startsWith("http://localhost:8080/")) {
-      return formatURL(url);
-    }
-
-    return url;
+    return blobKey;
   }
 
   private String formatURL(String url) {
-    return url.replace("http://localhost:8080/", "/");
+    // GCS's localhost preview is not actually on localhost, so make the URL relative to the current domain.
+    if (url.startsWith("http://localhost:8080/")) {
+      return url.replace("http://localhost:8080/", "/");
+    }
+  
+    return url;
   }
 }
