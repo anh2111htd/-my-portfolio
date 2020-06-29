@@ -13,25 +13,6 @@
 // limitations under the License.
 
 /**
- * Adds a random greeting to the page.
- */
-function addRandomGreeting() {
-  const greetings = [
-    "Hello world!",
-    "¡Hola Mundo!",
-    "你好，世界！",
-    "Bonjour le monde!",
-  ];
-
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
-
-  // Add it to the page.
-  const greetingContainer = document.getElementById("greeting-container");
-  greetingContainer.innerText = greeting;
-}
-
-/**
  * Adds comments from /data to the page.
  */
 function getComments() {
@@ -39,11 +20,32 @@ function getComments() {
     .then((response) => response.json())
     .then((comments) => {
       document.getElementById("notes-container").innerHTML = `${comments
-        .map((comment) => `<p>${comment.comment}</p>`)
+        .map(
+          (comment) =>
+            `<p>${comment.comment}</p>${
+              comment.imageURL
+                ? `<img src="${comment.imageURL}" alt="Image for 
+${comment.comment}">`
+                : ""
+            }`
+        )
         .join("")}`;
     });
 }
 
+// Fetches Blobstore URL for form action to faciliate upload of images
+function getBlobstoreURL() {
+  fetch("/blobstore-upload-url")
+    .then((response) => {
+      return response.text();
+    })
+    .then((imageUploadUrl) => {
+      const commentForm = document.getElementById("comment-form");
+      commentForm.action = imageUploadUrl;
+    });
+}
+
+getBlobstoreURL();
 getComments();
 function getGreeting() {
   fetch("/data")
